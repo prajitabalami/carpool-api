@@ -21,53 +21,53 @@ module.exports.signUp = async(req,res) => {
      
 
 
-    // const user = await User.findOne({
-    //     number: req.body.number,
+    const user = await User.findOne({
+        number: req.body.number,
        
-    // });
-    // if (user) return res.status(400).send("User already registered!");
-    // const OTP = otpGenerator.generate(6, {
-    //     digits: true,  lowerCaseAlphabets: false, upperCaseAlphabets : false, specialChars: false
-    // });
+    });
+    if (user) return res.status(400).send("User already registered!");
+    const OTP = otpGenerator.generate(6, {
+        digits: true,  lowerCaseAlphabets: false, upperCaseAlphabets : false, specialChars: false
+    });
 
-    // const number = req.body.number;
-    // const _id = req._id;
-    // console.log(OTP);
+    const number = req.body.number;
+    const _id = req._id;
+    console.log(OTP);
 
-    // const otp = new Otp({number: number, otp: OTP});
-    // const salt = await bcrypt.genSalt(10);
-    // otp.otp = await bcrypt.hash(otp.otp, salt);
-    // const result = await otp.save();
+    const otp = new Otp({number: number, otp: OTP});
+    const salt = await bcrypt.genSalt(10);
+    otp.otp = await bcrypt.hash(otp.otp, salt);
+    const result = await otp.save();
 
-    // var transporter = nodemailer.createTransport({
-    //     host:'smtp.gmail.com',
-    //     port:587,
-    //     secure: false,
-    //     requireTLS:true,
-    //     auth:{
-    //         user:'prajita.balami@deerwalk.edu.np',
-    //         pass:"ljeibasebfiuhvzp"
-    //     }
+    var transporter = nodemailer.createTransport({
+        host:'smtp.gmail.com',
+        port:587,
+        secure: false,
+        requireTLS:true,
+        auth:{
+            user:'prajita.balami@deerwalk.edu.np',
+            pass:""
+        }
     
-    // });
-    // var mailOptions = {
-    //     from:'prajita.balami@deerwalk.edu.np',
-    //     to:`${email}`,
-    //     subject:'OTP Verification Code',
-    //     text:`Your OTP is ${OTP}`
+    });
+    var mailOptions = {
+        from:'prajita.balami@deerwalk.edu.np',
+        to:`${email}`,
+        subject:'OTP Verification Code',
+        text:`Your OTP is ${OTP}`
     
-    // }
-    // transporter.sendMail(mailOptions, function(error,info){
-    //     if(error){
-    //         console.log(error);
-    //     }
-    //     else{
-    //         console.log("email has been sent", info.response);
-    //     }
-    // })
+    }
+    transporter.sendMail(mailOptions, function(error,info){
+        if(error){
+            console.log(error);
+        }
+        else{
+            console.log("email has been sent", info.response);
+        }
+    })
 
 
-    // return res.status(200).send({"number":req.body.number,"OTP":OTP});
+    return res.status(200).send({"number":req.body.number,"OTP":OTP});
    
 
 
